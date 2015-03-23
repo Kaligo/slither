@@ -24,8 +24,8 @@ class Slither
       col
     end
     
-    def spacer(length)
-      column(:spacer, length)
+    def spacer(length, char=:space)
+      column(:spacer, length, padding: char)
     end
     
     def trap(&block)

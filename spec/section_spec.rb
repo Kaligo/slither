@@ -32,6 +32,11 @@ describe Slither::Section do
       @section.spacer(5)
       @section.should have(1).columns
     end
+
+    it 'should screate spacer with padding char' do
+      @section.spacer(1, 'a')
+      @section.columns[0].padding.should eq 'a'
+    end
   
     it "can should override the alignment of the definition" do
       section = Slither::Section.new('name', :align => :left)

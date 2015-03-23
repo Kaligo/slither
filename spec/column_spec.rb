@@ -48,7 +48,7 @@ describe Slither::Column do
       @column = Slither::Column.new(@name, @length, :padding => :zero)
     end
     
-    it "should accept only :space or :zero" do
+    it "should accept only :space or :zero or string" do
       lambda{ Slither::Column.new(@name, @length, :padding => :bogus) }.should raise_error(ArgumentError, "Option :padding only accepts :space (default) or :zero")  
     end
     
@@ -134,6 +134,11 @@ describe Slither::Column do
       @column.format(25).should == '00025'
     end
     
+    it 'should respect padding with any character' do
+      @column = Slither::Column.new(@name, @length, :type => :integer, :padding => 'a')
+      @column.format('bc').should == 'aaabc'
+    end
+
     describe "that is a float type" do
       it "should respect padding with zeros aligned right" do
         @column = Slither::Column.new(@name, @length, :type => :float, :padding => :zero, :align => :right)

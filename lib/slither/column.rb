@@ -65,11 +65,20 @@ class Slither
 
       # Manually apply padding. sprintf only allows padding on numeric fields.
       def pad(value)
-        return value unless @padding == :zero
+        if @padding == :zero
+          pad_value(value, '0')
+        elsif @padding.is_a? String
+          pad_value(value, @padding)
+        else
+          return value
+        end
+      end
+
+      def pad_value(value, padding_character)
         matcher = @alignment == :right ? /^ +/ : / +$/
         space = value.match(matcher)
         return value unless space
-        value.gsub(space[0], '0' * space[0].size)
+        value.gsub(space[0], padding_character * space[0].size)
       end
 
       def inspect
@@ -108,7 +117,7 @@ class Slither
         unless options[:align].nil? || [:left, :right].include?(options[:align])
           raise ArgumentError, "Option :align only accepts :right (default) or :left"
         end
-        unless options[:padding].nil? || [:space, :zero].include?(options[:padding])
+        if options[:padding] && !(options[:padding].is_a?(String) || [:space, :zero].include?(options[:padding]))
           raise ArgumentError, "Option :padding only accepts :space (default) or :zero"
         end
       end
