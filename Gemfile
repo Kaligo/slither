@@ -1,3 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'rspec', '~>2.14'
+group :test do
+  gem 'rspec', '~>2.14'
+end
