@@ -39,4 +39,24 @@ describe Slither::Generator do
     expected = "HEAD         1\n      Paul    Hewson\n      Dave     Evans\nFOOT         1"
     @generator.generate(@data).should == expected
   end
+
+  context "when body is not an array but enumerable" do
+    class CustomEnumerable
+      include Enumerable
+
+      RECORD = {:first => "Paul", :last => "Hewson" }
+
+      def each
+        3.times do
+          yield RECORD
+        end
+      end
+    end
+
+    it "should generate expected output" do
+      @data[:body] = CustomEnumerable.new
+      expected = "HEAD         1\n      Paul    Hewson\n      Paul    Hewson\n      Paul    Hewson\nFOOT         1"
+      @generator.generate(@data).should == expected
+    end
+  end
 end

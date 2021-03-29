@@ -10,8 +10,8 @@ class Slither
 	    @definition.sections.each do |section|
 	      content = data[section.name]
 	      if content
-  	      content = [content] unless content.is_a?(Array)
-  	      raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") if content.empty?
+  	      content = [content] if content.is_a?(Hash)
+  	      raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") unless content.any?
   	      content.each do |row|
   	        @builder << section.format(row)
   	      end
