@@ -15,7 +15,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rspec (~> 2.14)
+  rspec
 
 BUNDLED WITH
    2.1.4
