@@ -35,12 +35,17 @@ describe Slither::Generator do
     lambda {  @generator.generate(@data) }.should raise_error(Slither::RequiredSectionEmptyError, "Required section 'header' was empty.")
   end
 
+  it "should raise an error if there is no data for a required section" do
+    @data[:body] = []
+    lambda {  @generator.generate(@data) }.should raise_error(Slither::RequiredSectionEmptyError, "Required section 'body' was empty.")
+  end
+
   it "should generate a string" do
     expected = "HEAD         1\n      Paul    Hewson\n      Dave     Evans\nFOOT         1"
     @generator.generate(@data).should == expected
   end
 
-  context "when body is not an array but enumerable" do
+  context "when content is not an array but enumerable" do
     class CustomEnumerable
       include Enumerable
 
@@ -56,6 +61,14 @@ describe Slither::Generator do
     it "should generate expected output" do
       @data[:body] = CustomEnumerable.new
       expected = "HEAD         1\n      Paul    Hewson\n      Paul    Hewson\n      Paul    Hewson\nFOOT         1"
+      @generator.generate(@data).should == expected
+    end
+  end
+
+  context "when content is hash" do
+    it "should generate expected output" do
+      @data[:body] = {:first => "Paul", :last => "Hewson" }
+      expected = "HEAD         1\n      Paul    Hewson\nFOOT         1"
       @generator.generate(@data).should == expected
     end
   end
