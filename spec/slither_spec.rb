@@ -43,7 +43,7 @@ describe Slither do
       generator = mock('generator')
       generator.should_receive(:generate).with({})
       Slither.should_receive(:definition).with(:test).and_return(definition)
-      Slither::Generator.should_receive(:new).with(definition).and_return(generator)
+      Slither::Generator.should_receive(:new).with(definition, false).and_return(generator)
       Slither.generate(:test, {})
     end
 
