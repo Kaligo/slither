@@ -77,6 +77,18 @@ or parse files already in that format into a nested hash:
    parsed_data = Slither.parseIo(io_object, :simple)
 
 
+TRAILING NEWLINE
+
+By default Slither does not add it.
+You can modify the behaviour by passing a generator level setting
+Slither.generate(:simple, test_data, true)
+
+If you wanna differ from the original settings you can do it by adding it to your definition
+Use :trailing_newline => true to add a trailing newline to a file
+Use :trailing_newline => false (default) to ignore trailing newline at the end of a file
+It overrides the generator level settings!
+
+
 == INSTALL:
 
 sudo gem install slither

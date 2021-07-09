@@ -18,10 +18,10 @@ class Slither
     definition
   end
 
-  def self.generate(definition_name, data)
+  def self.generate(definition_name, data, trailing_newline = false)
     definition = definition(definition_name)
     raise ArgumentError, "Definition name '#{name}' was not found." unless definition
-    generator = Generator.new(definition)
+    generator = Generator.new(definition, trailing_newline)
     generator.generate(data)
   end
 
