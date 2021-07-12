@@ -52,7 +52,7 @@ describe Slither::Generator do
         lambda { @generator.generate(@data) }.should_not raise_error
       end
 
-      it "should raise an error if the data is empty for a required section" do
+      it "should not raise an error if the data is empty for a required section" do
         @data[:body] = []
         lambda { @generator.generate(@data) }.should_not raise_error
       end
