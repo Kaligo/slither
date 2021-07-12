@@ -47,7 +47,7 @@ describe Slither::Generator do
 
     context "when body and header are optional" do
       let(:optional) { true }
-      it "should raise an error if there is no data for a required section" do
+      it "should not raise an error if there is no data for a required section" do
         @data.delete :header
         lambda { @generator.generate(@data) }.should_not raise_error
       end
