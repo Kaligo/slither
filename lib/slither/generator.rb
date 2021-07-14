@@ -10,17 +10,11 @@ class Slither
       @builder = []
       @definition.sections.each do |section|
         content = data[section.name]
-        if content
-          content = [content] if content.is_a?(Hash)
-          raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") unless content.any?
+        raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") if !content&.any? && !section.optional
 
-          content.each do |row|
-            @builder << section.format(row)
-          end
-        else
-          unless section.optional
-            raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.")
-          end
+        content = [content] if content.is_a?(Hash)
+        content&.each do |row|
+          @builder << section.format(row)
         end
       end
       generate_file_output
